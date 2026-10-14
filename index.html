@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090c0d">
+<title>PulseLab — Interactive Fitness Lab</title>
+<style>
+:root{--bg:#090c0d;--panel:#121718;--panel2:#192120;--line:#2a3534;--text:#f2f7f4;--muted:#91a09a;--lime:#c7ff3d;--lime2:#d9ff7a;--red:#ff7777;--r:20px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 75% -10%,#253220 0,transparent 34%),var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+button,input{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,input:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+.app{max-width:1400px;margin:auto;padding:22px clamp(15px,3vw,42px) 45px}
+header{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:27px}.brand{display:flex;align-items:center;gap:12px}.logo{width:43px;height:43px;border-radius:13px;background:var(--lime);color:#10150b;display:grid;place-items:center;font-size:22px;font-weight:950;transform:skew(-5deg)}.brand-name{font-size:15px;font-weight:900;letter-spacing:.14em}.brand-sub{font-size:10px;letter-spacing:.12em;color:var(--muted);margin-top:4px}.live{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px;letter-spacing:.07em}.dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 12px #c7ff3d88}
+.hero{display:grid;grid-template-columns:1.35fr .65fr;gap:16px;margin-bottom:25px}.hero-main{position:relative;overflow:hidden;padding:clamp(24px,4vw,42px);border:1px solid #34432d;border-radius:26px;background:linear-gradient(120deg,#1c2820,#111717 74%);min-height:220px}.hero-main:after{content:"PL";position:absolute;right:3%;bottom:-65px;font-size:clamp(120px,20vw,250px);font-weight:950;letter-spacing:-.1em;color:#c7ff3d0b;pointer-events:none}.eyebrow{font-size:10px;font-weight:900;letter-spacing:.17em;color:var(--lime);text-transform:uppercase}.hero h1{font-size:clamp(32px,4.4vw,54px);line-height:1.03;letter-spacing:-.05em;margin:15px 0 12px;position:relative;z-index:1}.hero p{max-width:570px;color:#aebbb5;font-size:13px;line-height:1.8;margin:0;position:relative;z-index:1}.hero-side{background:var(--panel);border:1px solid var(--line);border-radius:26px;padding:24px;display:flex;flex-direction:column;justify-content:space-between}.label{font-size:11px;color:var(--muted)}.hero-score{font-size:58px;line-height:1.2;font-weight:900;letter-spacing:-.07em;margin:7px 0}.hero-score small{font-size:14px;color:var(--muted);letter-spacing:0}.progress{height:6px;background:#2b3533;border-radius:20px;overflow:hidden;margin:10px 0}.progress span{display:block;width:0;height:100%;background:var(--lime);transition:width .3s}.note{font-size:10px;line-height:1.7;color:var(--muted)}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:14px;margin:28px 0 14px}.section-head h2{font-size:22px;letter-spacing:-.03em;margin:7px 0 0}.section-head p{color:var(--muted);font-size:12px;margin:5px 0 0}.pill{border:1px solid #40512c;color:var(--lime);background:#c7ff3d0e;border-radius:100px;padding:7px 10px;font-size:10px;letter-spacing:.08em;white-space:nowrap}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:21px;display:flex;flex-direction:column;gap:14px;min-width:0}.card-top{display:flex;justify-content:space-between;align-items:start}.exercise-icon{height:46px;width:46px;border-radius:14px;background:#c7ff3d12;border:1px solid #c7ff3d25;color:var(--lime);display:grid;place-items:center;font-size:22px}.card h3{font-size:17px;margin:0}.desc{font-size:12px;line-height:1.7;color:var(--muted);min-height:42px;margin-top:6px}.meta{display:flex;gap:8px;flex-wrap:wrap}.meta span{border:1px solid #303b39;border-radius:8px;padding:6px 8px;font-size:10px;color:#b5c1bb}.btn{border:1px solid transparent;border-radius:12px;min-height:45px;padding:12px 16px;font-weight:850;font-size:11px;letter-spacing:.04em;transition:transform .15s,background .15s}.btn:active{transform:scale(.98)}.primary{background:var(--lime);color:#11160b}.primary:hover{background:var(--lime2)}.secondary{background:#1b2423;border-color:#36413f;color:var(--text)}.secondary:hover{border-color:#819087}.block{width:100%}.history-grid{display:grid;grid-template-columns:1fr .9fr;gap:15px;margin-top:24px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px;min-width:0}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.panel h2{font-size:17px;margin:0}.empty{padding:24px 10px;text-align:center;color:var(--muted);font-size:12px;line-height:1.8}.history-list{display:grid;gap:8px}.history-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid #293432}.history-item:last-child{border-bottom:0}.history-item strong{font-size:12px}.history-item small{display:block;color:var(--muted);font-size:10px;margin-top:5px}.history-score{font-size:18px;color:var(--lime);font-weight:900;white-space:nowrap}.tips{display:grid;gap:13px}.tip{display:flex;gap:11px;font-size:12px;line-height:1.7;color:#b9c4be}.tip b{color:var(--lime)}.footer{text-align:center;color:#687771;font-size:10px;line-height:1.8;margin-top:27px}
+.overlay{position:fixed;inset:0;background:#030606dc;backdrop-filter:blur(10px);z-index:30;display:none;align-items:center;justify-content:center;padding:16px;overflow:auto}.overlay.open{display:flex}.modal{width:min(690px,100%);max-height:min(92dvh,900px);overflow:auto;background:#111718;border:1px solid #3a4641;border-radius:25px;padding:clamp(20px,4vw,34px);box-shadow:0 25px 100px #0009;position:relative}.modal-x{position:absolute;right:16px;top:16px;width:38px;height:38px;border-radius:11px;border:1px solid #35413e;background:#1b2322;color:white;font-size:20px}.modal h2{font-size:clamp(23px,4vw,32px);letter-spacing:-.04em;margin:9px 45px 9px 0}.modal-intro{color:#a9b6b0;font-size:13px;line-height:1.8;margin:0 0 20px}.tutorial-visual{min-height:125px;border:1px solid #34422c;border-radius:17px;background:radial-gradient(circle at 50% 50%,#c7ff3d12,transparent 65%),#151d19;display:flex;align-items:center;justify-content:center;gap:18px;margin:16px 0;padding:16px}.visual-symbol{font-size:clamp(48px,10vw,72px);color:var(--lime);font-weight:900}.visual-caption{max-width:250px;color:#c8d2cc;font-size:12px;line-height:1.7}.steps{display:grid;gap:11px;margin:17px 0 21px}.step{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;color:#c5cfca;font-size:12px;line-height:1.7}.step-num{width:26px;height:26px;display:grid;place-items:center;border-radius:9px;background:#c7ff3d16;color:var(--lime);font-weight:900}.safety{padding:12px 14px;border:1px solid #4c3a27;background:#211a12;border-radius:12px;color:#e2c8a1;font-size:11px;line-height:1.7;margin-bottom:18px}.modal-actions{display:flex;gap:10px}.modal-actions>*{flex:1}
+.countdown-stage{min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.countdown-number{font-size:clamp(100px,25vw,170px);line-height:1;font-weight:950;letter-spacing:-.09em;color:var(--lime);text-shadow:0 0 55px #c7ff3d26;animation:pop .5s ease}.countdown-label{font-size:11px;letter-spacing:.2em;color:var(--muted);margin-top:18px}.ring{width:clamp(190px,42vw,260px);height:clamp(190px,42vw,260px);border-radius:50%;border:1px solid #3b4a31;display:grid;place-items:center;background:radial-gradient(circle,#c7ff3d0c,transparent 68%);margin:15px auto}.timer{font-size:clamp(54px,12vw,82px);font-weight:950;letter-spacing:-.07em;color:var(--lime);font-variant-numeric:tabular-nums}.active-title{text-align:center;font-size:19px;font-weight:850}.active-sub{text-align:center;color:var(--muted);font-size:12px;line-height:1.7}.counter-controls{display:flex;align-items:center;justify-content:center;gap:15px;margin:16px 0}.counter-value{font-size:38px;font-weight:900;min-width:70px;text-align:center}.round-btn{height:48px;width:48px;border-radius:15px;background:#202a26;border:1px solid #3d4a42;color:var(--lime);font-size:24px;font-weight:700}.result-score{font-size:65px;font-weight:950;letter-spacing:-.07em;color:var(--lime);line-height:1.2}.result-sub{color:var(--muted);font-size:12px;line-height:1.8}.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:18px 0}.stat{border:1px solid #2f3a35;background:#0c1110;border-radius:13px;padding:14px}.stat strong{display:block;font-size:20px;margin-bottom:5px}.stat span{font-size:10px;color:var(--muted)}.field{display:grid;gap:8px;margin:17px 0}.field label{font-size:12px;color:#c4cec8}.field input{background:#0b1010;color:white;border:1px solid #36423e;border-radius:12px;padding:13px;min-height:46px;width:100%}.toast{position:fixed;bottom:max(18px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:50;background:var(--lime);color:#10150a;padding:12px 18px;border-radius:12px;font-weight:850;font-size:12px;display:none;max-width:calc(100vw - 30px)}.toast.show{display:block}
+@keyframes pop{0%{transform:scale(.7);opacity:.3}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.hero-side{min-height:155px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.app{padding:15px 13px 32px}header{margin-bottom:20px}.live{font-size:9px}.cards,.history-grid{grid-template-columns:1fr}.hero-main{min-height:220px}.card{padding:18px}.section-head{align-items:start;flex-direction:column}.modal-actions{flex-direction:column-reverse}.result-stats{grid-template-columns:1fr}.tutorial-visual{gap:10px}.visual-caption{font-size:11px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="app">
+<header><div class="brand"><div class="logo">P</div><div><div class="brand-name">PULSELAB</div><div class="brand-sub">INTERACTIVE FITNESS LAB</div></div></div><div class="live"><span class="dot"></span> SPORT TECH EXPERIENCE</div></header>
+<section class="hero">
+  <div class="hero-main"><div class="eyebrow">Learn · Test · Improve</div><h1>Train smarter.<br><span style="color:var(--lime)">Measure progress.</span></h1><p>เรียนรู้วิธีทดสอบก่อนเริ่มจริง ทำตามขั้นตอนพร้อมตัวจับเวลา และรับสรุปผลสมรรถภาพหลังจบการทดสอบ</p></div>
+  <div class="hero-side"><div><div class="label">LATEST PERFORMANCE SCORE</div><div class="hero-score" id="latestScore">— <small>/ 100</small></div><div class="progress"><span id="scoreProgress"></span></div></div><div class="note" id="latestNote">ทำแบบทดสอบแรกเพื่อดูคะแนนและติดตามความก้าวหน้า<br>คะแนนเป็นดัชนีตัวอย่างสำหรับโปรเจกต์นี้</div></div>
+</section>
+<section>
+<div class="section-head"><div><div class="eyebrow">01 / Choose a test</div><h2>Performance Tests</h2><p>เลือกการทดสอบเพื่ออ่านคำแนะนำก่อนเริ่ม</p></div><span class="pill">3 TEST MODULES</span></div>
+<div class="cards">
+<article class="card"><div class="card-top"><div class="exercise-icon">↗</div><span class="pill">POWER</span></div><div><h3>Vertical Jump</h3><div class="desc">ประเมินพลังระเบิดของกล้ามเนื้อขาจากความสูงในการกระโดด</div></div><div class="meta"><span>เตรียมตัว 3 วินาที</span><span>ทดสอบ 30 วินาที</span></div><button class="btn primary block start-test" data-test="jump">LEARN & START ↗</button></article>
+<article class="card"><div class="card-top"><div class="exercise-icon">＋</div><span class="pill">ENDURANCE</span></div><div><h3>Push-up Test</h3><div class="desc">ทดสอบความทนทานของกล้ามเนื้อส่วนบน นับเฉพาะครั้งที่ทำได้ด้วยฟอร์มที่เหมาะสม</div></div><div class="meta"><span>เตรียมตัว 3 วินาที</span><span>ทดสอบ 30 วินาที</span></div><button class="btn primary block start-test" data-test="pushups">LEARN & START ↗</button></article>
+<article class="card"><div class="card-top"><div class="exercise-icon">◷</div><span class="pill">CORE</span></div><div><h3>Plank Hold</h3><div class="desc">วัดเวลาที่รักษาท่าแพลงก์ได้อย่างมั่นคง พร้อมตัวจับเวลานับถอยหลัง</div></div><div class="meta"><span>เตรียมตัว 3 วินาที</span><span>สูงสุด 60 วินาที</span></div><button class="btn primary block start-test" data-test="plank">LEARN & START ↗</button></article>
+</div>
+</section>
+<section class="history-grid">
+<div class="panel"><div class="panel-head"><h2>Performance History</h2><button class="btn secondary" id="clearHistory" style="min-height:35px;padding:8px 10px">CLEAR</button></div><div id="history"><div class="empty">ยังไม่มีผลการทดสอบ<br>เริ่มทดสอบและบันทึกผลเพื่อดูประวัติ</div></div></div>
+<div class="panel"><div class="panel-head"><h2>How it works</h2><span class="pill">4 STEPS</span></div><div class="tips"><div class="tip"><b>01</b><span>อ่านวิธีทำและข้อควรระวังของแต่ละท่า</span></div><div class="tip"><b>02</b><span>กดเริ่ม แล้วรอการนับถอยหลัง 3–2–1–GO!</span></div><div class="tip"><b>03</b><span>ทำแบบทดสอบตามเวลาที่แสดง ระบบจะช่วยจับเวลาและบันทึกค่าที่กรอก</span></div><div class="tip"><b>04</b><span>ดูสรุปผล กดบันทึก และกลับมาทดสอบซ้ำเพื่อเปรียบเทียบ</span></div></div></div>
+</section>
+<div class="footer">PULSELAB FITNESS TECH · RESPONSIVE WEB DEMO FOR IPAD SAFARI<br>คะแนนใช้สูตรตัวอย่าง ไม่ใช่เกณฑ์มาตรฐานทางการแพทย์หรือการกีฬา</div>
+</main>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+<div class="modal" id="modal"></div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const KEY = "pulselab-interactive-history-v2";
+const tests = {
+ jump: {
+  name:"Vertical Jump", category:"POWER", icon:"↗", duration:30, durationLabel:"30 วินาที",
+  intro:"ทดสอบพลังระเบิดของขา โดยวัดความสูงของการกระโดดที่ดีที่สุดในช่วงเวลาทดสอบ",
+  visual:"กระโดดในแนวดิ่ง", symbol:"↟",
+  steps:["ยืนแยกเท้าประมาณช่วงไหล่บนพื้นที่มั่นคงและไม่ลื่น","ย่อเข่า เหวี่ยงแขน และกระโดดขึ้นในแนวดิ่งอย่างควบคุมได้","ลงพื้นด้วยเข่างอเล็กน้อย รักษาสมดุล และพักระหว่างครั้งตามความเหมาะสม"],
+  safety:"เคลียร์พื้นที่เหนือศีรษะและรอบตัวก่อนกระโดด หากมีอาการเจ็บหรือเวียนศีรษะให้หยุดทันที",
+  instruction:"ระหว่าง 30 วินาที ให้กระโดดอย่างปลอดภัย แล้วกรอกความสูงที่วัดได้หลังจบการทดสอบ",
+  metric:"ความสูงกระโดดที่ดีที่สุด", unit:"cm", max:150, scoreMax:60
+ },
+ pushups: {
+  name:"Push-up Test", category:"ENDURANCE", icon:"＋", duration:30, durationLabel:"30 วินาที",
+  intro:"ทดสอบความทนทานของกล้ามเนื้อส่วนบน นับจำนวนครั้งที่ทำได้ด้วยฟอร์มที่ควบคุมได้",
+  visual:"ลำตัวเป็นแนวตรง", symbol:"↔",
+  steps:["วางมือใต้หรือกว้างกว่าแนวไหล่เล็กน้อย และเหยียดขาไปด้านหลัง","เกร็งลำตัวให้เป็นแนวเดียวกัน ลดอกลงอย่างควบคุมได้","ดันตัวกลับขึ้นโดยไม่ปล่อยให้สะโพกตก นับเฉพาะครั้งที่ทำได้เต็มช่วงการเคลื่อนไหว"],
+  safety:"ปรับเป็น Knee Push-up ได้หากจำเป็น หยุดเมื่อรู้สึกเจ็บข้อมือ ไหล่ หรือหน้าอก",
+  instruction:"กด +1 ทุกครั้งที่ทำ Push-up ได้ครบหนึ่งครั้งอย่างถูกฟอร์ม",
+  metric:"จำนวนครั้งที่ทำได้", unit:"reps", max:300, scoreMax:40
+ },
+ plank: {
+  name:"Plank Hold", category:"CORE", icon:"◷", duration:60, durationLabel:"สูงสุด 60 วินาที",
+  intro:"ทดสอบความทนทานของแกนกลางลำตัว โดยรักษาแนวศีรษะ หลัง สะโพก และขาให้มั่นคง",
+  visual:"รักษาลำตัวให้ตรง", symbol:"━",
+  steps:["วางข้อศอกใต้หัวไหล่และเหยียดขาไปด้านหลัง","เกร็งหน้าท้องและก้น รักษาศีรษะ หลัง และสะโพกให้อยู่ในแนวเดียวกัน","หายใจตามปกติ ไม่กลั้นหายใจ และหยุดเมื่อรักษาฟอร์มไม่ได้"],
+  safety:"ไม่จำเป็นต้องฝืนให้ครบเวลา หากมีอาการปวดหลังหรือเจ็บไหล่ให้หยุดทันที",
+  instruction:"รักษาท่า Plank ให้ถูกฟอร์มจนหมดเวลา หรือกด Finish Test เมื่อจำเป็นต้องหยุด",
+  metric:"เวลาที่รักษาท่าได้", unit:"sec", max:60, scoreMax:60
+ }
+};
+let activeTest = null, intervalId = null, remaining = 0, repCount = 0, currentResult = null, startedAt = 0, elapsed = 0, countdown = 3, soundOn = false, audioCtx = null;
+function historyRead(){try{const v=JSON.parse(localStorage.getItem(KEY)||"[]");return Array.isArray(v)?v:[]}catch(e){return[]}}
+function historyWrite(v){try{localStorage.setItem(KEY,JSON.stringify(v));return true}catch(e){toast("บันทึกไม่ได้ โปรดตรวจสอบการตั้งค่า Safari");return false}}
+function dateText(v){return new Date(v).toLocaleString("th-TH",{dateStyle:"medium",timeStyle:"short"})}
+function toast(s){const t=$("toast");t.textContent=s;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2400)}
+function openModal(html){$("modal").innerHTML=html;$("overlay").classList.add("open");document.body.style.overflow="hidden"}
+function closeModal(){clearInterval(intervalId);intervalId=null;$("overlay").classList.remove("open");document.body.style.overflow=""}
+function tutorial(testId){
+ activeTest=tests[testId];
+ const t=activeTest;
+ openModal(`<button class="modal-x" id="closeModal" aria-label="Close">×</button><div class="eyebrow">STEP 01 / LEARN THE MOVEMENT</div><h2 id="modalTitle">${t.name}</h2><p class="modal-intro">${t.intro}</p><div class="tutorial-visual"><div class="visual-symbol">${t.symbol}</div><div class="visual-caption"><strong style="color:var(--lime);display:block;margin-bottom:5px">KEY TECHNIQUE</strong>${t.visual}<br>เน้นความถูกต้องก่อนความเร็ว</div></div><div class="steps">${t.steps.map((s,i)=>`<div class="step"><span class="step-num">${i+1}</span><span>${s}</span></div>`).join("")}</div><div class="safety">⚠ ${t.safety}</div><div class="modal-actions"><button class="btn secondary" id="cancelTutorial">CANCEL</button><button class="btn primary" id="readyBtn">I'M READY · START TEST ↗</button></div>`);
+ $("closeModal").onclick=closeModal;$("cancelTutorial").onclick=closeModal;$("readyBtn").onclick=beginCountdown;
+}
+function beep(freq=700,duration=.12){if(!soundOn)return;try{audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=freq;o.connect(g);g.connect(audioCtx.destination);g.gain.setValueAtTime(.07,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+duration);o.start();o.stop(audioCtx.currentTime+duration)}catch(e){}}
+function beginCountdown(){
+ remaining=activeTest.duration;repCount=0;elapsed=0;countdown=3;
+ openModal(`<div class="countdown-stage"><div class="eyebrow">GET INTO POSITION</div><div class="countdown-number" id="countdownNumber">3</div><div class="countdown-label" id="countdownLabel">STARTING IN</div><p class="modal-intro" style="margin-top:24px">${activeTest.name} · ${activeTest.durationLabel}</p><button class="btn secondary" id="abortCountdown">CANCEL TEST</button></div>`);
+ $("abortCountdown").onclick=closeModal;beep(520);
+ intervalId=setInterval(()=>{countdown--;const n=$("countdownNumber"),l=$("countdownLabel");if(!n)return;if(countdown>0){n.textContent=countdown;n.style.animation="none";void n.offsetWidth;n.style.animation="";beep(520)}else{n.textContent="GO!";l.textContent="TEST IN PROGRESS";n.style.fontSize="clamp(70px,18vw,120px)";beep(920,.25);clearInterval(intervalId);intervalId=null;setTimeout(startActiveTest,500)}},1000);
+}
+function startActiveTest(){
+ remaining=activeTest.duration;startedAt=Date.now();
+ const isPush=activeTest===tests.pushups, isJump=activeTest===tests.jump, isPlank=activeTest===tests.plank;
+ openModal(`<button class="modal-x" id="closeActive" aria-label="Finish test">×</button><div class="eyebrow">STEP 02 / ACTIVE TEST</div><h2 id="modalTitle">${activeTest.name}</h2><div class="ring"><div class="timer" id="timerText">${formatTime(remaining)}</div></div><div class="active-title" id="activeTitle">${isPush?"Count each clean rep":isJump?"Perform safe jumps":"Hold a steady plank"}</div><p class="active-sub" id="activeSub">${activeTest.instruction}</p>${isPush?`<div class="counter-controls"><button class="round-btn" id="minusRep" aria-label="Decrease rep">−</button><div class="counter-value" id="repValue">0</div><button class="round-btn" id="plusRep" aria-label="Add rep">+</button></div>`:""}<div class="modal-actions"><button class="btn secondary" id="pauseBtn">PAUSE</button><button class="btn primary" id="finishBtn">FINISH TEST</button></div><p class="note" style="text-align:center;margin-top:14px">Timer นี้ทำงานในหน้าเว็บขณะเปิดอยู่ หากสลับแอป Safari อาจพักการทำงานเบื้องหลัง</p>`);
+ $("closeActive").onclick=finishTest;$("finishBtn").onclick=finishTest;$("pauseBtn").onclick=togglePause;
+ if(isPush){$("plusRep").onclick=()=>{$("repValue").textContent=++repCount;beep(720,.06)};$("minusRep").onclick=()=>{repCount=Math.max(0,repCount-1);$("repValue").textContent=repCount}}
+ intervalId=setInterval(tick,1000);
+}
+function formatTime(s){s=Math.max(0,Math.ceil(s));return `${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`}
+let paused=false, pausedAt=0;
+function tick(){
+ if(paused)return;
+ remaining=Math.max(0,remaining-1);
+ const el=$("timerText");if(el)el.textContent=formatTime(remaining);
+ if(remaining<=5&&remaining>0)beep(480,.07);
+ if(remaining<=0){beep(900,.3);finishTest(true)}
+}
+function togglePause(){
+ paused=!paused;
+ const b=$("pauseBtn");if(b)b.textContent=paused?"RESUME":"PAUSE";
+ const title=$("activeTitle");if(title)title.textContent=paused?"Test paused":(activeTest===tests.pushups?"Count each clean rep":activeTest===tests.jump?"Perform safe jumps":"Hold a steady plank");
+ if(paused){pausedAt=Date.now();clearInterval(intervalId);intervalId=null}
+ else{intervalId=setInterval(tick,1000)}
+}
+function finishTest(auto=false){
+ clearInterval(intervalId);intervalId=null;paused=false;
+ elapsed=Math.min(activeTest.duration,Math.max(1,Math.round((Date.now()-startedAt)/1000)));
+ if(activeTest===tests.plank) elapsed=Math.min(activeTest.duration,activeTest.duration-remaining);
+ showResult(auto);
+}
+function showResult(auto){
+ const t=activeTest;let measurement=0,metricLabel="",unit=t.unit;
+ if(t===tests.pushups){measurement=repCount;metricLabel="Push-ups completed"}
+ else if(t===tests.plank){measurement=Math.max(0,t.duration-remaining);metricLabel="Plank hold duration";unit="sec"}
+ else {measurement=null;metricLabel="Best vertical jump"}
+ let inputBlock=t===tests.jump?`<div class="field"><label for="jumpHeight">กรอกความสูงกระโดดที่ดีที่สุด (cm)</label><input id="jumpHeight" type="number" min="0" max="150" inputmode="decimal" placeholder="เช่น 32"></div>`:"";
+ let val=t===tests.pushups?`${measurement} reps`:t===tests.plank?`${measurement} sec`:"กรอกผลการกระโดด";
+ openModal(`<div class="eyebrow">STEP 03 / TEST COMPLETE</div><h2 id="modalTitle">${auto?"Time's up!":"Test finished"}</h2><p class="modal-intro">${auto?"หมดเวลาทดสอบแล้ว":"คุณจบการทดสอบแล้ว"} ตรวจสอบผลก่อนสร้างรายงาน</p><div class="tutorial-visual"><div class="visual-symbol" style="font-size:55px">✓</div><div class="visual-caption"><strong style="color:var(--lime);display:block;margin-bottom:5px">${t.name}</strong>เวลาที่ทำการทดสอบ: ${formatTime(elapsed)}<br>ผลเบื้องต้น: ${val}</div></div>${inputBlock}<div class="modal-actions"><button class="btn secondary" id="discardResult">DISCARD</button><button class="btn primary" id="makeReport">GENERATE REPORT ↗</button></div>`);
+ $("discardResult").onclick=()=>{currentResult=null;closeModal()};
+ $("makeReport").onclick=()=>{
+  let value=measurement;
+  if(t===tests.jump){value=Number($("jumpHeight").value);if($("jumpHeight").value.trim()===""||!Number.isFinite(value)||value<0||value>150){toast("กรอกความสูงระหว่าง 0–150 cm");$("jumpHeight").focus();return}}
+  let score=t===tests.jump?Math.min(value/60,1)*100:t===tests.pushups?Math.min(value/40,1)*100:Math.min(value/60,1)*100;
+  currentResult={id:Date.now(),createdAt:new Date().toISOString(),testId:t===tests.jump?"jump":t===tests.pushups?"pushups":"plank",name:t.name,value,unit:t===tests.jump?"cm":t===tests.pushups?"reps":"sec",elapsed,score:Math.round(score)};
+  showFinalReport(currentResult);
+ };
+}
+function showFinalReport(r){
+ openModal(`<div class="eyebrow">STEP 04 / PERFORMANCE REPORT</div><h2 id="modalTitle">Your Performance</h2><p class="modal-intro">สรุปผลการทดสอบของคุณ บันทึกเพื่อเก็บไว้เปรียบเทียบในครั้งต่อไป</p><div class="result-score">${r.score}<span style="font-size:14px;color:var(--muted);letter-spacing:0"> / 100</span></div><div class="result-sub">DEMO PERFORMANCE INDEX · ${dateText(r.createdAt)}</div><div class="result-stats"><div class="stat"><strong>${r.value}</strong><span>RESULT (${r.unit})</span></div><div class="stat"><strong>${formatTime(r.elapsed)}</strong><span>TIME USED</span></div><div class="stat"><strong>${r.score>=80?"STRONG":r.score>=50?"BUILDING":"START"}</strong><span>DEMO LEVEL</span></div></div><p class="modal-intro">คะแนนนี้ใช้สูตรตัวอย่างเพื่อสาธิตการบันทึกผล ไม่ได้เทียบกับมาตรฐานตามอายุ เพศ หรือประเภทกีฬา</p><div class="modal-actions"><button class="btn secondary" id="closeReport">CLOSE</button><button class="btn primary" id="saveReport">SAVE RESULT ✓</button></div>`);
+ $("closeReport").onclick=closeModal;$("saveReport").onclick=()=>{
+  const h=historyRead();h.push(r);if(historyWrite(h)){renderHistory();$("latestScore").innerHTML=`${r.score} <small>/ 100</small>`;$("scoreProgress").style.width=`${r.score}%`;$("latestNote").textContent=`ผลล่าสุด: ${r.name} · บันทึกไว้ในเบราว์เซอร์นี้แล้ว`;closeModal();toast("บันทึกผลการทดสอบแล้ว")}
+ };
+}
+function renderHistory(){
+ const h=historyRead(),target=$("history");
+ if(!h.length){target.innerHTML='<div class="empty">ยังไม่มีผลการทดสอบ<br>เริ่มทดสอบและบันทึกผลเพื่อดูประวัติ</div>';return}
+ target.innerHTML="";const wrap=document.createElement("div");wrap.className="history-list";
+ h.slice().reverse().slice(0,8).forEach(r=>{const row=document.createElement("div");row.className="history-item";const left=document.createElement("div"),name=document.createElement("strong"),date=document.createElement("small");name.textContent=r.name;date.textContent=`${dateText(r.createdAt)} · ${r.value} ${r.unit}`;left.append(name,date);const score=document.createElement("div");score.className="history-score";score.textContent=`${r.score}/100`;row.append(left,score);wrap.append(row)});
+ target.append(wrap);
+}
+document.querySelectorAll(".start-test").forEach(btn=>btn.addEventListener("click",()=>tutorial(btn.dataset.test)));
+$("clearHistory").addEventListener("click",()=>{if(!historyRead().length){toast("ยังไม่มีประวัติให้ลบ");return}if(confirm("ต้องการลบประวัติการทดสอบทั้งหมดหรือไม่?")){if(historyWrite([])){renderHistory();$("latestScore").innerHTML='— <small>/ 100</small>';$("scoreProgress").style.width="0";$("latestNote").innerHTML="ทำแบบทดสอบแรกเพื่อดูคะแนนและติดตามความก้าวหน้า<br>คะแนนเป็นดัชนีตัวอย่างสำหรับโปรเจกต์นี้";toast("ลบประวัติแล้ว")}}});
+$("overlay").addEventListener("click",e=>{if(e.target===$("overlay")&&intervalId===null)closeModal()});
+renderHistory();
+})();
+</script>
+</body>
+</html>
